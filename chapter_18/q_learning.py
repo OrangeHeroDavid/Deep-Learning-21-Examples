@@ -18,7 +18,6 @@ def epsilon_greedy(Q, state):
         action = Q[state, :].argmax()
     return action
 
-
 e = Env()
 # e.state_num = 45 代表总共45种策略，45种state
 # 4种action
@@ -33,6 +32,7 @@ for i in range(200):
         reward = e.interact(action)
         new_state = e.present_state
         # GAMMA-greedycelue
+        # (1 - ALPHA) * Q[state, action]
         Q[state, action] = (1 - ALPHA) * Q[state, action] + \
             ALPHA * (reward + GAMMA * Q[new_state, :].max())
         e.print_map()
