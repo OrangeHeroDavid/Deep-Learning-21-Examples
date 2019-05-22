@@ -20,8 +20,11 @@ def epsilon_greedy(Q, state):
 
 
 e = Env()
+# e.state_num = 45 代表总共45种策略，45种state
+# 4种action
 Q = np.zeros((e.state_num, 4))
 
+# 总共玩200次游戏
 for i in range(200):
     e = Env()
     while (e.is_end is False) and (e.step < MAX_STEP):
@@ -29,6 +32,7 @@ for i in range(200):
         state = e.present_state
         reward = e.interact(action)
         new_state = e.present_state
+        # GAMMA-greedycelue
         Q[state, action] = (1 - ALPHA) * Q[state, action] + \
             ALPHA * (reward + GAMMA * Q[new_state, :].max())
         e.print_map()
