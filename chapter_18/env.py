@@ -1,7 +1,7 @@
 from __future__ import print_function
 import copy
 
-
+# 普通宝藏地图
 MAP = \
     '''
 .........
@@ -10,7 +10,7 @@ MAP = \
 .       .
 .........
 '''
-
+# 有陷阱宝藏地图
 # MAP = \
 #     '''
 # .........
@@ -19,21 +19,29 @@ MAP = \
 # .       .
 # .........
 # '''
+
+# 将MAP地图按照“行”split，得到行列表
 MAP = MAP.strip().split('\n')
+# 在行列表的基础上再遍历得到每一个坐标的值
 MAP = [[c for c in line] for line in MAP]
 
 
 DX = [-1, 1, 0, 0]
 DY = [0, 0, -1, 1]
 
-
+# 游戏对象Class本身
 class Env(object):
+    # 自身初始化
     def __init__(self):
         self.map = copy.deepcopy(MAP)
-        self.x = 1
+        # 初始位置(1,1)
+        self.x = 1 
         self.y = 1
+        # 摸索行走的步数
         self.step = 0
+        # 获得的奖励total_reward
         self.total_reward = 0
+        # 游戏结束标志is_end
         self.is_end = False
 
     def interact(self, action):
@@ -61,13 +69,13 @@ class Env(object):
             reward = -5
         self.total_reward += reward
         return reward
-
+    # 总的状态数
     @property
     def state_num(self):
         rows = len(self.map)
         cols = len(self.map[0])
         return rows * cols
-
+    # 得到当前状态的编码
     @property
     def present_state(self):
         cols = len(self.map[0])
